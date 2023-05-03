@@ -1,0 +1,13 @@
+version: '2.2'
+
+services:
+
+  database:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      - POSTGRES_USER=responsivecards
+      - POSTGRES_PASSWORD=responsivecards
+      - POSTGRES_DB=responsivecards
+    ports:
+      - "5432:5432"

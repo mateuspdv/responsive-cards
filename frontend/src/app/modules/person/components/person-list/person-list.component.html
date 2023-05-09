@@ -1,1 +1,5 @@
-<p>person-list works!</p>
+<div class="grid">
+    <div *ngFor="let person of persons" class="col-3">
+        <app-person-card [person]="person"></app-person-card>
+    </div>
+</div>

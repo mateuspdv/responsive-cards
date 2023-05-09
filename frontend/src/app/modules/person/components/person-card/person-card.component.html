@@ -1,0 +1,11 @@
+<p-card header="{{ person.name }}" [style]="{ width: '300px' }">
+    <p>E-mail: {{ person.email }}</p>
+    <p>CPF: {{ person.cpf }}</p>
+
+    <ng-template pTemplate="footer">
+        <div class="footer">
+            <p-button label="Editar" styleClass="p-button-secondary"></p-button>
+            <p-button label="Excluir" styleClass="p-button-secondary"></p-button>
+        </div>
+    </ng-template>
+</p-card>

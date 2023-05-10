@@ -16,6 +16,10 @@ export class PersonFormComponent implements OnInit{
 
     @Input() displayForm: boolean = false;
 
+    @Input() formAction!: string;
+
+    @Input() selectedPerson!: Person;
+
     @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
 
     @Output() refreshData: EventEmitter<void> = new EventEmitter<void>();
@@ -51,8 +55,20 @@ export class PersonFormComponent implements OnInit{
                 this.refreshData.emit();
             },
             error: (error) => {
-                console.log(error.error.errors[0].defaultMessage);
-                // this.messageService.add({ severity:'error', detail: });
+                this.messageService.add({ severity:'error', detail: error.error.errors[0].defaultMessage });
+            }
+        })
+    }
+
+    update(person: Person): void {
+        this.personService.update(person).subscribe({
+            next: () => {
+                this.messageService.add({ severity:'success', detail: 'Person updated successfully' });
+                this.closeForm();
+                this.refreshData.emit();
+            },
+            error: (error) => {
+                this.messageService.add({ severity:'error', detail: error.error.errors[0].defaultMessage });
             }
         })
     }
@@ -63,8 +79,38 @@ export class PersonFormComponent implements OnInit{
 
     submitButton(): void {
         if(this.formGroup.valid) {
-            this.create(this.formGroup.value);
+            if(this.formAction == 'create') {
+                this.create(this.formGroup.value);
+                return;
+            }
+
+            this.update(this.formGroup.value);
         }
+    }
+
+    verifyAction(): void {
+        if(this.formAction == 'create') {
+            this.formGroup.reset();
+            return;
+        }
+
+        this.formGroup.patchValue(this.selectedPerson);
+    }
+
+    getTitleForm(): string {
+        if(this.formAction == 'create') {
+            return 'Add Person';
+        }
+
+        return 'Update Person';
+    }
+
+    getActionButtonName() : string {
+        if(this.formAction == 'create') {
+            return 'Submit';
+        }
+
+        return 'Update';
     }
 
 }

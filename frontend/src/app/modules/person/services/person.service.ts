@@ -16,8 +16,20 @@ export class PersonService {
         return this.httpClient.get<Person[]>(this.url);
     }
 
+    findById(idPerson: number): Observable<Person> {
+        return this.httpClient.get<Person>(`${this.url}/${idPerson}`);
+    }
+
     create(person: Person) : Observable<Person> {
         return this.httpClient.post<Person>(this.url, person);
+    }
+
+    update(person: Person) : Observable<Person> {
+        return this.httpClient.put<Person>(this.url, person);
+    }
+
+    deleteById(idPerson: number): Observable<void> {
+        return this.httpClient.delete<void>(`${this.url}/${idPerson}`);
     }
 
 }

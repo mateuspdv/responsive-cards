@@ -13,6 +13,10 @@ export class PersonListComponent implements OnInit {
 
     displayForm: boolean = false;
 
+    personToUpdate!: Person;
+
+    formAction: string = 'create';
+
     constructor(private personService: PersonService) {}
 
     ngOnInit(): void {
@@ -33,6 +37,17 @@ export class PersonListComponent implements OnInit {
 
     closeForm() : void {
         this.displayForm = false;
+    }
+
+    updatePerson(event: any) {
+        this.formAction = 'update';
+        this.personToUpdate = event;
+        this.openForm();
+    }
+
+    addPersonButton(): void {
+        this.formAction = 'create';
+        this.openForm();
     }
 
 }

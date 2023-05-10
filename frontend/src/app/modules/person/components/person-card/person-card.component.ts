@@ -12,8 +12,14 @@ export class PersonCardComponent {
 
     @Output() updatePerson: EventEmitter<Person> = new EventEmitter<Person>();
 
+    @Output() deletePerson: EventEmitter<number> = new EventEmitter<number>();
+
     updateRecord(): void {
         this.updatePerson.emit(this.person);
+    }
+
+    deleteRecord(): void {
+        this.deletePerson.emit(this.person.id);
     }
 
 }

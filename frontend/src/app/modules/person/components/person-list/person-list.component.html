@@ -2,7 +2,7 @@
 
 <div class="grid">
     <div *ngFor="let person of persons" class="col-3">
-        <app-person-card [person]="person" (updatePerson)="updatePerson($event)"></app-person-card>
+        <app-person-card [person]="person" (updatePerson)="updatePerson($event)" (deletePerson)="confirmExclusion($event)"></app-person-card>
     </div>
 </div>
 
@@ -11,3 +11,6 @@
                  [selectedPerson]="personToUpdate"
                  (closeDialog)="closeForm()"
                  (refreshData)="findAll()"></app-person-form>
+
+<p-toast></p-toast>
+<p-confirmDialog acceptButtonStyleClass="p-button-secondary" rejectButtonStyleClass="p-button-secondary"></p-confirmDialog>

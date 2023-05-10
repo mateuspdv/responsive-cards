@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     InputTextModule,
     InputMaskModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ]
 })
 export class PersonModule { }

@@ -16,4 +16,8 @@ export class PersonService {
         return this.httpClient.get<Person[]>(this.url);
     }
 
+    create(person: Person) : Observable<Person> {
+        return this.httpClient.post<Person>(this.url, person);
+    }
+
 }

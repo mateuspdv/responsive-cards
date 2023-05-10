@@ -1,5 +1,9 @@
+<p-button label="Add Person" styleClass="p-button-rounded p-button-success" (onClick)="openForm()"></p-button>
+
 <div class="grid">
     <div *ngFor="let person of persons" class="col-3">
         <app-person-card [person]="person"></app-person-card>
     </div>
 </div>
+
+<app-person-form [displayForm]="displayForm" (closeDialog)="closeForm()" (refreshData)="findAll()"></app-person-form>

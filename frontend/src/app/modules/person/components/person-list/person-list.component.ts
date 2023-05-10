@@ -11,6 +11,8 @@ export class PersonListComponent implements OnInit {
 
     persons: Person[] = [];
 
+    displayForm: boolean = false;
+
     constructor(private personService: PersonService) {}
 
     ngOnInit(): void {
@@ -23,6 +25,14 @@ export class PersonListComponent implements OnInit {
                 this.persons = persons;
             }
         });
+    }
+
+    openForm(): void {
+        this.displayForm = true;
+    }
+
+    closeForm() : void {
+        this.displayForm = false;
     }
 
 }

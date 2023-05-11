@@ -1,7 +1,51 @@
-<p-button label="Add Person" styleClass="p-button-rounded p-button-success" (onClick)="addPersonButton()"></p-button>
+<p-button label="Add Person" styleClass="p-button-rounded p-button-success" (onClick)="addPersonButton()" id="add-person-button"></p-button>
+
+<p-accordion class="w-full">
+    <p-accordionTab>
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center">
+                <i class="pi pi-search mr-2"></i>
+                <span class="vertical-align-middle">Filter</span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <form [formGroup]="filter">
+                <div class="formgroup-inline flex-nowrap">
+                    <div class="field col-12 lg:col-3">
+                        <label htmlFor="name">
+                            <span class="font-bold block mb-2">Name:</span>
+                        </label>
+                        <input pInputText id="name" formControlName="name">
+                    </div>
+
+                    <div class="field col-12 lg:col-3">
+                        <label htmlFor="email">
+                            <span class="font-bold block mb-2">E-mail:</span>
+                        </label>
+                        <input pInputText id="email" formControlName="email">
+                    </div>
+
+                    <div class="field col-12 lg:col-3">
+                        <label htmlFor="cpf">
+                            <span class="font-bold block mb-2">CPF:</span>
+                        </label>
+                        <input pInputText id="cpf" formControlName="cpf">
+                    </div>
+
+                    <div class="field col-12 lg:col-3">
+                        <p-button label="Search" styleClass="p-button-secondary" (onClick)="search()"></p-button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </p-accordionTab>
+</p-accordion>
+
+<br>
 
 <div class="grid">
-    <div *ngFor="let person of persons" class="col-3">
+    <div *ngFor="let person of persons" class="sm:col-12 md:col-6 lg:col-6 xl:col-4">
         <app-person-card [person]="person" (updatePerson)="updatePerson($event)" (deletePerson)="confirmExclusion($event)"></app-person-card>
     </div>
 </div>

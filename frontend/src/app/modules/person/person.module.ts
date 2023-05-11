@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AccordionModule } from 'primeng/accordion';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     InputTextModule,
     InputMaskModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AccordionModule
   ]
 })
 export class PersonModule { }

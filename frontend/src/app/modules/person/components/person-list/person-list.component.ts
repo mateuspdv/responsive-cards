@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Person } from '../../models/person.model';
 import { PersonService } from '../../services/person.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-person-list',
@@ -10,6 +11,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   providers: [MessageService, ConfirmationService]
 })
 export class PersonListComponent implements OnInit {
+
+    filter!: FormGroup;
 
     persons: Person[] = [];
 
@@ -21,10 +24,20 @@ export class PersonListComponent implements OnInit {
 
     constructor(private personService: PersonService,
                 private messageService: MessageService,
-                private confirmationService: ConfirmationService) {}
+                private confirmationService: ConfirmationService,
+                private formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
+        this.buildFilter();
         this.findAll();
+    }
+
+    buildFilter(): void {
+        this.filter = this.formBuilder.group({
+            name: [null],
+            email: [null],
+            cpf: [null]
+        });
     }
 
     findAll(): void {
@@ -72,6 +85,10 @@ export class PersonListComponent implements OnInit {
                 this.deleteById(idPerson);
             }
         })
+    }
+
+    search(): void {
+        console.log(this.filter.value);
     }
 
 }

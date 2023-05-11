@@ -1,6 +1,7 @@
 package com.crudperson.controller;
 
 import com.crudperson.service.PersonService;
+import com.crudperson.service.dto.FilterPersonDto;
 import com.crudperson.service.dto.PersonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,11 @@ public class PersonController {
     public ResponseEntity<Void> deleteById(@PathVariable Long idPerson) {
         personService.deleteById(idPerson);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<PersonDto>> search(@RequestBody FilterPersonDto filter) {
+        return ResponseEntity.ok(personService.search(filter));
     }
 
 }

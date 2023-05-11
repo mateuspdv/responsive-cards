@@ -1,10 +1,14 @@
 package com.crudperson.service;
 
 import com.crudperson.repository.PersonRepository;
+import com.crudperson.service.dto.FilterPersonDto;
 import com.crudperson.service.dto.PersonDto;
 import com.crudperson.service.exception.EntityNotFoundException;
+import com.crudperson.service.filter.PersonSpecification;
+import com.crudperson.service.filter.SearchCriteria;
 import com.crudperson.service.mapper.PersonMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +52,20 @@ public class PersonService {
     public void deleteById(Long idPerson) {
         exitsById(idPerson);
         personRepository.deleteById(idPerson);
+    }
+
+    public List<PersonDto> search(FilterPersonDto filter) {
+        PersonSpecification firstSpecification = new PersonSpecification(
+                new SearchCriteria("name", ":", filter.getName()));
+        PersonSpecification secondSpecification = new PersonSpecification(
+                new SearchCriteria("email", ":", filter.getEmail()));
+        PersonSpecification thirdSpecification = new PersonSpecification(
+                new SearchCriteria("cpf", ":", filter.getCpf()));
+
+        return personMapper.toDto(personRepository.findAll(Specification
+                .where(firstSpecification)
+                .and(secondSpecification)
+                .and(thirdSpecification)));
     }
 
 }

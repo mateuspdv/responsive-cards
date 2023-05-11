@@ -3,6 +3,7 @@ import { Person } from '../../models/person.model';
 import { PersonService } from '../../services/person.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FilterPerson } from '../../models/filter-person.model';
 
 @Component({
   selector: 'app-person-list',
@@ -34,9 +35,9 @@ export class PersonListComponent implements OnInit {
 
     buildFilter(): void {
         this.filter = this.formBuilder.group({
-            name: [null],
-            email: [null],
-            cpf: [null]
+            name: [''],
+            email: [''],
+            cpf: ['']
         });
     }
 
@@ -53,6 +54,14 @@ export class PersonListComponent implements OnInit {
             next: () => {
                 this.messageService.add({ severity:'success', detail: 'Person deleted successfully' });
                 this.findAll();
+            }
+        })
+    }
+
+    search(filter: FilterPerson): void {
+        this.personService.search(filter).subscribe({
+            next: (persons: Person[]) => {
+                this.persons = persons;
             }
         })
     }
@@ -87,8 +96,8 @@ export class PersonListComponent implements OnInit {
         })
     }
 
-    search(): void {
-        console.log(this.filter.value);
+    searchButton(): void {
+        this.search(this.filter.value);
     }
 
 }

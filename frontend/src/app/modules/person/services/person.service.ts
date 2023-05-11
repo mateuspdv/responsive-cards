@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Person } from '../models/person.model';
+import { FilterPerson } from '../models/filter-person.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class PersonService {
 
     deleteById(idPerson: number): Observable<void> {
         return this.httpClient.delete<void>(`${this.url}/${idPerson}`);
+    }
+
+    search(filter: FilterPerson): Observable<Person[]> {
+        return this.httpClient.post<Person[]>(`${this.url}/search`, filter);
     }
 
 }

@@ -20,6 +20,8 @@ export class PersonFormComponent implements OnInit{
 
     @Input() selectedPerson!: Person;
 
+    @Input() allCpf: string[] = [];
+
     @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
 
     @Output() refreshData: EventEmitter<void> = new EventEmitter<void>();
@@ -77,14 +79,36 @@ export class PersonFormComponent implements OnInit{
         return !this.formGroup.valid;
     }
 
+    verifyCpfExists(): boolean {
+        if(this.allCpf.includes(this.formGroup.get('cpf')?.value)) {
+            this.messageService.add({ severity:'error', detail: 'CPF already registered in the system' });
+            return true;
+        }
+        return false;
+    }
+
+    createPerson(): void {
+        if(!this.verifyCpfExists()) {
+            this.create(this.formGroup.value);
+        }
+    }
+
+    updatePerson(): void {
+        if(this.selectedPerson.cpf != this.formGroup.get('cpf')?.value) {
+            if(this.verifyCpfExists()) {
+                return;
+            }
+        }
+        this.update(this.formGroup.value);
+    }
+
     submitButton(): void {
         if(this.formGroup.valid) {
             if(this.formAction == 'create') {
-                this.create(this.formGroup.value);
+                this.createPerson();
                 return;
             }
-
-            this.update(this.formGroup.value);
+            this.updatePerson();
         }
     }
 

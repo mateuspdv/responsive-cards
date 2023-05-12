@@ -3,6 +3,7 @@ package com.crudperson.service;
 import com.crudperson.repository.PersonRepository;
 import com.crudperson.service.dto.FilterPersonDto;
 import com.crudperson.service.dto.PersonDto;
+import com.crudperson.service.exception.BusinessException;
 import com.crudperson.service.exception.EntityNotFoundException;
 import com.crudperson.service.filter.PersonSpecification;
 import com.crudperson.service.filter.SearchCriteria;
@@ -32,12 +33,23 @@ public class PersonService {
         }
     }
 
+    private void existsByCpf(String cpf) {
+        if (personRepository.existsByCpf(cpf)) {
+            throw new BusinessException("CPF already registered in the system");
+        }
+    }
+
+    private String findCpfById(Long idPerson) {
+        return personRepository.findCpfById(idPerson);
+    }
+
     public PersonDto findById(Long idPerson) {
         return personMapper.toDto(personRepository.findById(idPerson)
                 .orElseThrow(() -> new EntityNotFoundException("Person not found")));
     }
 
     public PersonDto create(PersonDto personDto) {
+        existsByCpf(personDto.getCpf());
         return personMapper.toDto(personRepository.save(personMapper.toEntity(personDto)));
     }
 
@@ -46,6 +58,9 @@ public class PersonService {
             throw new NullPointerException("The id field cannot be null");
         }
         exitsById(personDto.getId());
+        if (!Objects.equals(personDto.getCpf(), findCpfById(personDto.getId()))) {
+            existsByCpf(personDto.getCpf());
+        }
         return personMapper.toDto(personRepository.save(personMapper.toEntity(personDto)));
     }
 

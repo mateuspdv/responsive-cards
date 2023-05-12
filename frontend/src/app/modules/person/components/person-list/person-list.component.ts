@@ -17,6 +17,8 @@ export class PersonListComponent implements OnInit {
 
     persons: Person[] = [];
 
+    allCpf: string[] = [];
+
     displayForm: boolean = false;
 
     personToUpdate!: Person;
@@ -45,6 +47,7 @@ export class PersonListComponent implements OnInit {
         this.personService.findAll().subscribe({
             next: (persons: Person[]) => {
                 this.persons = persons;
+                this.allCpf = this.persons.map(person => person.cpf!);
             }
         });
     }
